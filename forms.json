@@ -1,0 +1,12 @@
+{
+  "REPLACE_WITH_YOUR_FORM_ID": {
+    "name": "Daily Job Log",
+    "dropboxFolder": "/Chipperfield AG/Daily Job Logs",
+    "fields": {
+      "REPLACE_WITH_FIELD_ID_1": "Crew Lead",
+      "REPLACE_WITH_FIELD_ID_2": "Job Site",
+      "REPLACE_WITH_FIELD_ID_3": "Hours Worked",
+      "REPLACE_WITH_FIELD_ID_4": "Notes"
+    }
+  }
+}
