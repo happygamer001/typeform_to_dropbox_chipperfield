@@ -36,6 +36,8 @@ function extractAnswerValue(answer) {
       return answer.boolean ? 'Yes' : 'No';
     case 'date':
       return answer.date;
+    case 'file_url':
+      return answer.file_url;
     default:
       return JSON.stringify(answer);
   }
