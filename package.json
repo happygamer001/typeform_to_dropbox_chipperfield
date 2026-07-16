@@ -1,9 +1,0 @@
-{
-  "name": "typeform-to-dropbox",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Receives Typeform webhook submissions, renders a readable PDF, and uploads it to Dropbox.",
-  "dependencies": {
-    "pdfkit": "^0.15.0"
-  }
-}
