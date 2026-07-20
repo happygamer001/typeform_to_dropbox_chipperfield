@@ -5,12 +5,14 @@
 
 async function getAccessToken() {
   // TEMPORARY DIAGNOSTIC LOGGING - remove once the invalid_client issue is resolved
+  const crypto = require('crypto');
   const key = process.env.DROPBOX_APP_KEY || '';
   const secret = process.env.DROPBOX_APP_SECRET || '';
   const token = process.env.DROPBOX_REFRESH_TOKEN || '';
-  console.log('DEBUG - APP_KEY:', key.length, 'chars, starts:', key.slice(0, 3), 'ends:', key.slice(-3));
-  console.log('DEBUG - APP_SECRET:', secret.length, 'chars, starts:', secret.slice(0, 3), 'ends:', secret.slice(-3));
-  console.log('DEBUG - REFRESH_TOKEN:', token.length, 'chars, starts:', token.slice(0, 3), 'ends:', token.slice(-3));
+  const hash = (v) => crypto.createHash('sha256').update(v).digest('hex').slice(0, 12);
+  console.log('DEBUG - APP_KEY hash:', hash(key), 'len:', key.length);
+  console.log('DEBUG - APP_SECRET hash:', hash(secret), 'len:', secret.length);
+  console.log('DEBUG - REFRESH_TOKEN hash:', hash(token), 'len:', token.length);
 
   const response = await fetch('https://api.dropbox.com/oauth2/token', {
     method: 'POST',
