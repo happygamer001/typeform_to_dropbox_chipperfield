@@ -5,9 +5,12 @@
 
 async function getAccessToken() {
   // TEMPORARY DIAGNOSTIC LOGGING - remove once the invalid_client issue is resolved
-  console.log('DEBUG - DROPBOX_APP_KEY present:', !!process.env.DROPBOX_APP_KEY, 'length:', (process.env.DROPBOX_APP_KEY || '').length);
-  console.log('DEBUG - DROPBOX_APP_SECRET present:', !!process.env.DROPBOX_APP_SECRET, 'length:', (process.env.DROPBOX_APP_SECRET || '').length);
-  console.log('DEBUG - DROPBOX_REFRESH_TOKEN present:', !!process.env.DROPBOX_REFRESH_TOKEN, 'length:', (process.env.DROPBOX_REFRESH_TOKEN || '').length);
+  const key = process.env.DROPBOX_APP_KEY || '';
+  const secret = process.env.DROPBOX_APP_SECRET || '';
+  const token = process.env.DROPBOX_REFRESH_TOKEN || '';
+  console.log('DEBUG - APP_KEY:', key.length, 'chars, starts:', key.slice(0, 3), 'ends:', key.slice(-3));
+  console.log('DEBUG - APP_SECRET:', secret.length, 'chars, starts:', secret.slice(0, 3), 'ends:', secret.slice(-3));
+  console.log('DEBUG - REFRESH_TOKEN:', token.length, 'chars, starts:', token.slice(0, 3), 'ends:', token.slice(-3));
 
   const response = await fetch('https://api.dropbox.com/oauth2/token', {
     method: 'POST',
