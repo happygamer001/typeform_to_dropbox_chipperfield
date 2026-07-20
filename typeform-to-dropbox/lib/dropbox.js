@@ -4,7 +4,7 @@
  */
 
 async function getAccessToken() {
-  // TEMPORARY DIAGNOSTIC LOGGING - remove once the invalid_client issue is resolved
+  // TEMPORARY DIAGNOSTIC LOGGING - remove once resolved
   const crypto = require('crypto');
   const key = process.env.DROPBOX_APP_KEY || '';
   const secret = process.env.DROPBOX_APP_SECRET || '';
@@ -14,18 +14,22 @@ async function getAccessToken() {
   console.log('DEBUG - APP_SECRET hash:', hash(secret), 'len:', secret.length);
   console.log('DEBUG - REFRESH_TOKEN hash:', hash(token), 'len:', token.length);
 
+  const basicAuth = Buffer.from(`${key}:${secret}`).toString('base64');
+
   const response = await fetch('https://api.dropbox.com/oauth2/token', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${basicAuth}`,
+    },
     body: new URLSearchParams({
       grant_type: 'refresh_token',
-      refresh_token: process.env.DROPBOX_REFRESH_TOKEN,
-      client_id: process.env.DROPBOX_APP_KEY,
-      client_secret: process.env.DROPBOX_APP_SECRET,
+      refresh_token: token,
     }),
   });
 
   const data = await response.json();
+  console.log('DEBUG - Dropbox response status:', response.status);
   if (!response.ok) {
     throw new Error(`Dropbox token refresh failed: ${JSON.stringify(data)}`);
   }
